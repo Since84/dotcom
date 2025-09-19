@@ -121,6 +121,70 @@ npm run lint
 npm run typecheck
 ````
 
+## Database Layer (Prisma)
+
+The backend (`@apps/api`) uses Prisma as the ORM. Default target is PostgreSQL for production, but you can temporarily switch to SQLite for rapid local iteration.
+
+### Switching Between Postgres and SQLite
+
+Postgres (default / recommended):
+1. Set `DATABASE_URL` in either root `.env` or `apps/api/prisma/.env`:
+  ```env
+  DATABASE_URL=postgresql://user:password@localhost:5432/career_platform
+  ```
+2. Ensure Postgres is running (Docker compose service `db`):
+  ```bash
+  docker compose -f infra/docker-compose.yml up -d db
+  ```
+3. Apply migrations:
+  ```bash
+  npx -w @apps/api prisma migrate dev -n init
+  npm -w @apps/api run db:seed
+  ```
+
+SQLite (fast local fallback):
+1. Edit `apps/api/prisma/schema.prisma` datasource:
+  ```prisma
+  datasource db { provider = "sqlite" url = env("DATABASE_URL") }
+  ```
+2. Set local file DB URL `apps/api/prisma/.env`:
+  ```env
+  DATABASE_URL="file:./dev.db"
+  ```
+3. Reset & migrate:
+  ```bash
+  npx -w @apps/api prisma migrate dev --name init
+  npm -w @apps/api run db:seed
+  ```
+
+### Migrations Workflow
+Generate + apply new migration after model changes:
+```bash
+npx -w @apps/api prisma migrate dev -n add_feature
+```
+Open Prisma Studio:
+```bash
+npm -w @apps/api run prisma:studio
+```
+
+### Seeding
+The seed script (`apps/api/prisma/seed.ts`) creates:
+- A default user (damon@example.com)
+- Tags (nextjs, nestjs, graphql)
+- One project & one blog post
+
+Re-run seed (will upsert records):
+```bash
+npm -w @apps/api run db:seed
+```
+
+### Production Notes
+- Use managed Postgres (RDS, Neon, Supabase, etc.).
+- Run `prisma migrate deploy` in CI/CD for production.
+- Maintain separate `.env.production` with secure credentials.
+- Consider connection pooling (pgBouncer) if deploying serverless.
+
+
 ````
 
 ## Roadmap Alignment
