@@ -1,5 +1,7 @@
 # Personal Career Web Application Monorepo
 
+![CI](https://github.com/Since84/dotcom/actions/workflows/ci.yml/badge.svg)
+
 This repository hosts a full‑stack portfolio and career development platform. It showcases engineering skill through real production‑style architecture, code quality, testing, and DevOps practices.
 
 See `DevPlan.md` for the strategic product & feature roadmap.

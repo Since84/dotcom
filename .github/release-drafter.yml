@@ -1,0 +1,47 @@
+name-template: 'v$NEXT_PATCH_VERSION'
+prerelease: false
+change-template: '- $TITLE (#$NUMBER) by @$AUTHOR'
+change-title-escapes: '
+'
+no-changes-template: 'No user-facing changes in this release.'
+categories:
+  - title: '🚀 Features'
+    labels:
+      - feat
+      - feature
+  - title: '🐛 Fixes'
+    labels:
+      - fix
+      - bug
+  - title: '🧰 Maintenance'
+    labels:
+      - chore
+      - refactor
+      - maintenance
+  - title: '🧪 Tests'
+    labels:
+      - test
+  - title: '📦 Dependencies'
+    labels:
+      - dependencies
+version-resolver:
+  major:
+    labels:
+      - major
+  minor:
+    labels:
+      - minor
+      - feat
+      - feature
+  patch:
+    labels:
+      - patch
+      - fix
+      - chore
+      - refactor
+      - test
+      - dependencies
+  default: patch
+template: |
+  ## Changes
+  $CHANGES
