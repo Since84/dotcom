@@ -1,0 +1,17 @@
+* text=auto eol=lf
+
+# Mark lock files as text
+package-lock.json text eol=lf
+
+# Ensure shell scripts have LF
+*.sh text eol=lf
+
+# Treat generated build artifacts as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg text
+
+# Linguist overrides (if needed later)
+# *.sql linguist-language=SQL
