@@ -1,26 +1,23 @@
 module.exports = {
   root: true,
+  extends: [
+    'next/core-web-vitals',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['./tsconfig.base.json'],
     ecmaVersion: 2022,
     sourceType: 'module',
   },
-  settings: {
-    react: { version: 'detect' },
-  },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'import'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'prettier',
-  ],
+  plugins: ['@typescript-eslint', 'import'],
   rules: {
-    'react/react-in-jsx-scope': 'off',
+    // Using Next.js App Router, the 'pages' directory doesn't exist
+    'next/no-html-link-for-pages': 'off',
+    // clsx has a default export; prevent noisy warnings
+    'import/no-named-as-default': 'off',
     'import/order': [
       'error',
       {
@@ -30,6 +27,13 @@ module.exports = {
       },
     ],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+  },
+  settings: {
+    react: { version: 'detect' },
+    // Point Next.js ESLint plugin to app folders in monorepo
+    next: {
+      rootDir: ['apps/*/'],
+    },
   },
   ignorePatterns: ['dist', 'node_modules'],
 };

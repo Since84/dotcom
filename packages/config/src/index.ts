@@ -1,5 +1,6 @@
-import * as dotenv from 'dotenv';
 import path from 'path';
+
+import * as dotenv from 'dotenv';
 
 let loaded = false;
 export function loadEnv(rootDir: string = process.cwd()) {

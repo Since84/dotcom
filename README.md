@@ -64,7 +64,7 @@ GraphQL Playground: http://localhost:${API_PORT:-4000}/graphql
 
 | Script              | Purpose                             |
 | ------------------- | ----------------------------------- |
-| `npm run dev`       | (Will) run web & api in parallel    |
+| `npm run dev`       | Run web & api in parallel           |
 | `npm run dev:web`   | Dev server for Next.js app          |
 | `npm run dev:api`   | Dev server for NestJS API           |
 | `npm run build`     | Build all workspaces                |
@@ -72,20 +72,18 @@ GraphQL Playground: http://localhost:${API_PORT:-4000}/graphql
 | `npm run lint`      | ESLint across repo                  |
 | `npm run format`    | Prettier write                      |
 | `npm run typecheck` | TypeScript project references check |
-| `npm run dev:web`   | Run only web app                    |
-| `npm run dev:api`   | Run only API                        |
 
 ## Environment Variables
 
 Copy `.env.example` to `.env` in the root (and/or each app) then adjust.
 
 | Variable       | Description                                |
-| -------------- | ------------------------------------------ | ------------ | ------ |
+| -------------- | ------------------------------------------ |
 | `DATABASE_URL` | PostgreSQL connection string               |
 | `REDIS_URL`    | Redis connection URL                       |
 | `API_PORT`     | Port for NestJS API (default 4000)         |
 | `WEB_PORT`     | Port for Next.js dev server (default 3000) |
-| `NODE_ENV`     | `development`                              | `production` | `test` |
+| `NODE_ENV`     | One of `development`, `production`, `test` |
 
 ## Testing Strategy
 
@@ -102,9 +100,28 @@ npm test
 
 Watch mode (example):
 
-```bash
+````bash
 npx jest apps/api --watch
-```
+
+Note: You may see ts-jest warnings about hybrid module kind; to silence, set `"isolatedModules": true` in your `tsconfig.json` (root or per-package). This is optional and non-blocking.
+
+## ESLint & Next.js App Router
+
+This repo uses Next.js App Router (no `pages/` directory). To align ESLint:
+
+- Disabled `next/no-html-link-for-pages` since `pages/` isn’t used.
+- Set `settings.next.rootDir = ['apps/*/']` in `.eslintrc.cjs` to point the Next plugin at the app workspaces.
+- Import order is enforced (`import/order`) with alphabetized groups and mandatory blank lines between groups.
+- Disabled `import/no-named-as-default` to avoid noise for packages like `clsx`.
+
+Quick checks:
+
+```bash
+npm run lint
+npm run typecheck
+````
+
+````
 
 ## Roadmap Alignment
 
@@ -130,7 +147,7 @@ Build images (after code exists):
 ```bash
 docker build -f infra/Dockerfile.api -t career-api:local .
 docker build -f infra/Dockerfile.web -t career-web:local .
-```
+````
 
 Run containers:
 

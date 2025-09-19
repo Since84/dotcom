@@ -1,7 +1,7 @@
 export default function HomePage() {
   return (
     <section className="space-y-6">
-      <h1 className="text-3xl font-bold tracking-tight">Hi, I'm Damon.</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Hi, I&apos;m Damon.</h1>
       <p className="text-gray-600 max-w-prose">
         This platform is an evolving showcase of engineering craft: performant web interfaces,
         resilient backend systems, data modeling, and DevOps excellence. Phase 1 focuses on getting

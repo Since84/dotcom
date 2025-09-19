@@ -1,8 +1,10 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { HealthModule } from './health/health.module';
+
 import { HelloResolver } from '../resolvers/hello.resolver';
+
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
