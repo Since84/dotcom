@@ -3,12 +3,14 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 
 import { HelloResolver } from '../resolvers/hello.resolver';
+import { PrismaModule } from '../prisma/prisma.module';
 
 import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
     HealthModule,
+    PrismaModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,

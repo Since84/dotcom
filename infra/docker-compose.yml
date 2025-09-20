@@ -4,8 +4,8 @@ services:
     image: postgres:15-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: xx12345xx
       POSTGRES_DB: career_platform
     ports:
       - '5432:5432'
